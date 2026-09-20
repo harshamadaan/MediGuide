@@ -4,7 +4,6 @@ import streamlit as st
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
-from langchain import hub
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
@@ -26,7 +25,8 @@ def require_env_var(name: str) -> str:
     return value
 
 
-DB_FAISS_PATH="vectorstore/db_faiss"
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+DB_FAISS_PATH = os.path.join(PROJECT_ROOT, "vectorstore", "db_faiss")
 @st.cache_resource
 
 def get_vectorstore():
