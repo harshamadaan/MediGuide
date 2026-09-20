@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environment
+.venv/
+.env
+
+# VS Code
+.vscode/
+
+# Python
+.python-version
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+.env
+Thumbs.db
+
+# Vector database
+vectorstore/
+
+# Logs
+*.log
