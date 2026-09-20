@@ -13,11 +13,15 @@ load_dotenv()
 
 
 def require_env_var(name: str) -> str:
-    value = os.getenv(name)
+    try:
+        value = st.secrets.get(name)
+    except Exception:
+        value = None
+    value = value or os.getenv(name)
     if not value:
         raise ValueError(
-            f"Missing {name}. Create a .env file in the project root with {name}=your_key_here "
-            "or export it in your terminal before running the app."
+            f"Missing {name}. Add it under Streamlit Cloud Manage app > Settings > Secrets "
+            "or define it in a local .env file."
         )
     return value
 
@@ -63,7 +67,11 @@ def main():
                     api_key=GROQ_API_KEY
                 )
                 
-                retrival_qa_chat_prompt=hub.pull("langchain-ai/retrieval-qa-chat")
+                retrival_qa_chat_prompt = PromptTemplate.from_template(
+                    """Use the following context to answer the question. """
+                    """If the answer is not in the context, say you do not know.\n\n"""
+                    """Context:\n{context}\n\nQuestion: {input}\n\nAnswer:"""
+                )
 
                 combine_docs_chain=create_stuff_documents_chain(llm=llm, prompt=retrival_qa_chat_prompt)
 
