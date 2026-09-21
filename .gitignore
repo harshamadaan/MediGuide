@@ -23,8 +23,5 @@ dist/
 .env
 Thumbs.db
 
-# Vector database
-vectorstore/
-
 # Logs
 *.log
