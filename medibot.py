@@ -61,7 +61,7 @@ def main():
         try:
             with st.spinner("Processing your request..."):
                 if is_greeting(prompt):
-                    result = "Hello! I am Medibot. Ask me a medical question based on the available documents."
+                    result = "Hello! I am Medibot."
                     st.chat_message("assistant").markdown(result)
                     st.session_state.messages.append({"role":"assistant","content":result})
                     st.stop()
