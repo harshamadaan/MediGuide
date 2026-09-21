@@ -25,6 +25,10 @@ def require_env_var(name: str) -> str:
     return value
 
 
+def is_greeting(message: str) -> bool:
+    return message.strip().lower() in {"hi", "hello", "hey", "hii", "good morning", "good afternoon", "good evening"}
+
+
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 DB_FAISS_PATH = os.path.join(PROJECT_ROOT, "vectorstore", "db_faiss")
 @st.cache_resource
@@ -56,6 +60,12 @@ def main():
 
         try:
             with st.spinner("Processing your request..."):
+                if is_greeting(prompt):
+                    result = "Hello! I am Medibot. Ask me a medical question based on the available documents."
+                    st.chat_message("assistant").markdown(result)
+                    st.session_state.messages.append({"role":"assistant","content":result})
+                    st.stop()
+
                 vectorstore=get_vectorstore()
                 if vectorstore is None:
                     st.error("Vectorstore is not loaded. Please check the logs for errors.")
